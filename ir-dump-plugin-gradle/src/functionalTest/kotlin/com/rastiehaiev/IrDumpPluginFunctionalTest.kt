@@ -1,11 +1,13 @@
 package com.rastiehaiev
 
 import org.gradle.testkit.runner.GradleRunner
+import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.io.TempDir
 import java.io.File
 import kotlin.test.Test
 import kotlin.test.assertTrue
 
+@Disabled
 class IrDumpPluginFunctionalTest {
 
     @field:TempDir

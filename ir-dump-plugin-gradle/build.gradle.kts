@@ -3,10 +3,14 @@ plugins {
     `java-gradle-plugin`
 }
 
+dependencies {
+    implementation(kotlin("gradle-plugin-api"))
+}
+
 gradlePlugin {
     val greeting by plugins.creating {
         id = "com.rastiehaiev.ir-dump"
-        implementationClass = "com.rastiehaiev.IrDumpPlugin"
+        implementationClass = "com.rastiehaiev.IrDumpGradlePlugin"
     }
 }
 
@@ -22,8 +26,8 @@ val functionalTest by tasks.registering(Test::class) {
     useJUnitPlatform()
 }
 
-// gradlePlugin.testSourceSets.add(functionalTestSourceSet)
+gradlePlugin.testSourceSets.add(functionalTestSourceSet)
 
-/*tasks.named<Task>("check") {
+tasks.named<Task>("check") {
     dependsOn(functionalTest)
-}*/
+}
