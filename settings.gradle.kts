@@ -4,4 +4,4 @@ plugins {
 
 rootProject.name = "ir-dump"
 
-include("ir-dump-plugin-gradle")
+include("plugin-gradle")
