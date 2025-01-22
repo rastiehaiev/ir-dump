@@ -14,6 +14,11 @@ class IrDumpGradlePlugin : Plugin<Project> {
 
 open class IrDumpGradleExtension(
     var enabled: Boolean = false,
-    var outputFileName: String = "ir-dump.txt",
+    var outputFileName: String? = DEFAULT_FILE_NAME,
     var append: Boolean = false,
-)
+) {
+
+    companion object {
+        const val DEFAULT_FILE_NAME = "ir-dump.txt"
+    }
+}

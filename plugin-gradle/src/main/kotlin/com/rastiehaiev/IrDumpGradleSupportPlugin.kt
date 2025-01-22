@@ -1,5 +1,6 @@
 package com.rastiehaiev
 
+import org.gradle.api.file.ProjectLayout
 import org.gradle.api.provider.Provider
 import org.jetbrains.kotlin.gradle.plugin.KotlinCompilation
 import org.jetbrains.kotlin.gradle.plugin.KotlinCompilerPluginSupportPlugin
@@ -12,13 +13,27 @@ class IrDumpGradleSupportPlugin : KotlinCompilerPluginSupportPlugin {
         kotlinCompilation: KotlinCompilation<*>,
     ): Provider<List<SubpluginOption>> = with(kotlinCompilation.target.project) {
         val extension = extensions.findByType(IrDumpGradleExtension::class.java) ?: IrDumpGradleExtension()
+        val outputFileAbsolutePath = resolveOutputFileAbsolutePath(layout, extension.outputFileName)
         provider {
             listOf(
                 SubpluginOption("enabled", extension.enabled.toString()),
-                SubpluginOption("outputFileName", extension.outputFileName),
+                SubpluginOption("outputFileAbsolutePath", outputFileAbsolutePath),
                 SubpluginOption("append", extension.append.toString()),
             )
         }
+    }
+
+    private fun resolveOutputFileAbsolutePath(
+        layout: ProjectLayout,
+        fileName: String?,
+    ): String {
+        val outputFileName = fileName ?: IrDumpGradleExtension.DEFAULT_FILE_NAME
+        return layout.buildDirectory
+            .dir("ir-dump")
+            .get()
+            .file(outputFileName)
+            .asFile
+            .absolutePath
     }
 
     override fun isApplicable(kotlinCompilation: KotlinCompilation<*>) = run {

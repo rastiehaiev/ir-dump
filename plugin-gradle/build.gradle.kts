@@ -1,5 +1,6 @@
 plugins {
     id("buildlogic.kotlin-common-conventions")
+    id("maven-publish")
     `java-gradle-plugin`
 }
 
@@ -30,4 +31,10 @@ gradlePlugin.testSourceSets.add(functionalTestSourceSet)
 
 tasks.named<Task>("check") {
     dependsOn(functionalTest)
+}
+
+publishing {
+    repositories {
+        mavenLocal()
+    }
 }
