@@ -17,14 +17,17 @@ class IrDumpIrExtension(
     private val append: Boolean,
     private val outputFileAbsolutePath: String,
 ) : IrGenerationExtension {
+
     override fun generate(moduleFragment: IrModuleFragment, pluginContext: IrPluginContext) {
         moduleFragment.files.forEach { file ->
-            file.acceptChildrenVoid(AnnotatedFunctionDumper())
+            file.acceptChildrenVoid(IrDumper(outputFileAbsolutePath))
         }
     }
 }
 
-private class AnnotatedFunctionDumper : IrElementVisitorVoid {
+private class IrDumper(
+    private val outputFileAbsolutePath: String,
+) : IrElementVisitorVoid {
 
     override fun visitDeclaration(declaration: IrDeclarationBase) {
         super.visitDeclaration(declaration)
@@ -39,12 +42,11 @@ private class AnnotatedFunctionDumper : IrElementVisitorVoid {
         }
     }
 
+    private fun log(message: String) {
+        File(outputFileAbsolutePath).appendText("${javaClass.simpleName}: $message\n")
+    }
+
     override fun visitElement(element: IrElement) {
         element.acceptChildrenVoid(this)
     }
-}
-
-private fun log(message: String) {
-    File("/Users/roman/dev/project/playground/shadow-log/log.tmp")
-        .appendText("ShadowLogIrExtension: $message\n")
 }

@@ -12,6 +12,7 @@ class IrDumpCompilerPlugin : CompilerPluginRegistrar() {
     override val supportsK2: Boolean = true
 
     override fun ExtensionStorage.registerExtensions(configuration: CompilerConfiguration) {
+        log("IrDumpCompilerPlugin registerExtensions")
         val configurationKeys = configuration.toKeys()
         if (configurationKeys.enabled) {
             val extension = with(configurationKeys) { IrDumpIrExtension(append, outputFileAbsolutePath) }

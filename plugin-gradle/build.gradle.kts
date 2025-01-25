@@ -6,6 +6,7 @@ plugins {
 
 dependencies {
     implementation(kotlin("gradle-plugin-api"))
+    compileOnly(libs.kotlin.gradle.plugin)
 }
 
 gradlePlugin {
@@ -15,7 +16,7 @@ gradlePlugin {
     }
 }
 
-val functionalTestSourceSet = sourceSets.create("functionalTest") {
+val functionalTestSourceSet: SourceSet = sourceSets.create("functionalTest") {
 }
 
 configurations["functionalTestImplementation"].extendsFrom(configurations["testImplementation"])
