@@ -14,4 +14,3 @@ rootProject.name = "ir-dump"
 include("lib")
 include("plugin-gradle")
 include("plugin-kotlin")
-include("sample")
