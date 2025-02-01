@@ -14,13 +14,3 @@ dependencies {
 irDump {
     enabled = true
 }
-
-tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
-    doFirst {
-        println("KotlinCompile task: ${this.name}")
-
-        println("Free compiler args: ${compilerOptions.freeCompilerArgs.get()}")
-        println("JVM target: ${compilerOptions.jvmTarget.get()}")
-        println("Other options: ${compilerOptions.allWarningsAsErrors.get()}")
-    }
-}

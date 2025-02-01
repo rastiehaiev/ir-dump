@@ -1,11 +1,10 @@
-package com.rastiehaiev.com.rastiehaiev
+package com.rastiehaiev
 
 import org.jetbrains.kotlin.config.CompilerConfiguration
 import org.jetbrains.kotlin.config.CompilerConfigurationKey
 
 private val KEY_ENABLED = CompilerConfigurationKey.create<Boolean>("enabled")
-private val KEY_APPEND = CompilerConfigurationKey.create<Boolean>("append")
-private val KEY_OUTPUT_FILE_ABSOLUTE_PATH = CompilerConfigurationKey.create<String>("outputFileAbsolutePath")
+private val KEY_OUTPUT_FILE_ABSOLUTE_PATH = CompilerConfigurationKey.create<String>("outputDir")
 
 class CompilerConfigurationKeys(
     private val config: CompilerConfiguration,
@@ -18,14 +17,7 @@ class CompilerConfigurationKeys(
         config.put(KEY_ENABLED, value.toBoolean())
     }
 
-    val append: Boolean
-        get() = config.get(KEY_APPEND) == true
-
-    fun setAppend(value: String) {
-        config.put(KEY_APPEND, value.toBoolean())
-    }
-
-    val outputFileAbsolutePath: String
+    val outputDirAbsolutePath: String
         get() = config.get(KEY_OUTPUT_FILE_ABSOLUTE_PATH)
             ?: error("Missing output file absolute path.")
 

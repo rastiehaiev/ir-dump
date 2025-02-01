@@ -12,21 +12,21 @@ import org.jetbrains.kotlin.ir.util.render
 import org.jetbrains.kotlin.ir.visitors.IrElementVisitorVoid
 import org.jetbrains.kotlin.ir.visitors.acceptChildrenVoid
 import java.io.File
+import java.nio.file.Files
 
 class IrDumpIrExtension(
-    private val append: Boolean,
-    private val outputFileAbsolutePath: String,
+    private val outputDirAbsolutePath: String,
 ) : IrGenerationExtension {
 
     override fun generate(moduleFragment: IrModuleFragment, pluginContext: IrPluginContext) {
         moduleFragment.files.forEach { file ->
-            file.acceptChildrenVoid(IrDumper(outputFileAbsolutePath))
+            file.acceptChildrenVoid(IrDumper(outputDirAbsolutePath))
         }
     }
 }
 
 private class IrDumper(
-    private val outputFileAbsolutePath: String,
+    private val outputDirAbsolutePath: String,
 ) : IrElementVisitorVoid {
 
     override fun visitDeclaration(declaration: IrDeclarationBase) {
@@ -36,14 +36,15 @@ private class IrDumper(
         val hasTargetAnnotation = declaration.annotations.any { it.type.render() == "com.rastiehaiev.IrDump" }
         if (hasTargetAnnotation) {
             if (declaration is IrDeclarationParent) {
-                log("dumping module fragment for: ${declaration.kotlinFqName}")
+                log(declaration.kotlinFqName.asString(), declaration.dump())
             }
-            log("\n${declaration.dump()}")
         }
     }
 
-    private fun log(message: String) {
-        File(outputFileAbsolutePath).appendText("${javaClass.simpleName}: $message\n")
+    private fun log(fqName: String, message: String) {
+        File(outputDirAbsolutePath).resolve("$fqName.txt")
+            .also { Files.createFile(it.toPath()) }
+            .appendText(message)
     }
 
     override fun visitElement(element: IrElement) {

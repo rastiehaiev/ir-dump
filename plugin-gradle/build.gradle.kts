@@ -1,7 +1,7 @@
 plugins {
     id("buildlogic.kotlin-common-conventions")
     id("maven-publish")
-    `java-gradle-plugin`
+    id("java-gradle-plugin")
 }
 
 dependencies {

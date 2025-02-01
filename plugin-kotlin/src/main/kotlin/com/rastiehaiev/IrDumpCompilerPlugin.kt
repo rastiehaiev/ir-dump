@@ -1,6 +1,5 @@
 package com.rastiehaiev
 
-import com.rastiehaiev.com.rastiehaiev.toKeys
 import org.jetbrains.kotlin.backend.common.extensions.IrGenerationExtension
 import org.jetbrains.kotlin.compiler.plugin.CompilerPluginRegistrar
 import org.jetbrains.kotlin.compiler.plugin.ExperimentalCompilerApi
@@ -12,10 +11,9 @@ class IrDumpCompilerPlugin : CompilerPluginRegistrar() {
     override val supportsK2: Boolean = true
 
     override fun ExtensionStorage.registerExtensions(configuration: CompilerConfiguration) {
-        log("IrDumpCompilerPlugin registerExtensions")
         val configurationKeys = configuration.toKeys()
         if (configurationKeys.enabled) {
-            val extension = with(configurationKeys) { IrDumpIrExtension(append, outputFileAbsolutePath) }
+            val extension = with(configurationKeys) { IrDumpIrExtension(outputDirAbsolutePath) }
             IrGenerationExtension.registerExtension(extension)
         }
     }

@@ -1,5 +1,6 @@
 package com.rastiehaiev
 
+import org.gradle.api.Project
 import org.gradle.api.provider.Provider
 import org.jetbrains.kotlin.gradle.plugin.KotlinCompilation
 import org.jetbrains.kotlin.gradle.plugin.KotlinCompilerPluginSupportPlugin
@@ -14,17 +15,25 @@ class IrDumpGradleSupportPlugin : KotlinCompilerPluginSupportPlugin {
         project.provider {
             val extension = project.getIrExtension()
             if (extension.enabled) {
-                val outputFileAbsolutePath = project.getIrOutputFile().absolutePath
-                listOf(
-                    SubpluginOption("enabled", extension.enabled.toString()),
-                    SubpluginOption("outputFileAbsolutePath", outputFileAbsolutePath),
-                    SubpluginOption("append", extension.append.toString()),
-                )
+                generateSubPluginOptions(project) ?: emptyList()
             } else {
                 emptyList()
             }
         }
     }
+
+    private fun generateSubPluginOptions(project: Project) =
+        project.getIrOutputDir().get().asFile
+            .listFiles()
+            .toList()
+            .sortedBy { it.name }
+            .lastOrNull()
+            ?.let { dir ->
+                listOf(
+                    SubpluginOption("enabled", "true"),
+                    SubpluginOption("outputDir", dir.absolutePath),
+                )
+            }
 
     override fun isApplicable(kotlinCompilation: KotlinCompilation<*>) = with(kotlinCompilation.target.project) {
         plugins.hasPlugin(IrDumpGradleSupportPlugin::class.java) && getIrExtension().enabled
