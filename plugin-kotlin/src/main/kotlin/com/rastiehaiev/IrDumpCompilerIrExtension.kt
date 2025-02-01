@@ -14,7 +14,7 @@ import org.jetbrains.kotlin.ir.visitors.acceptChildrenVoid
 import java.io.File
 import java.nio.file.Files
 
-class IrDumpIrExtension(
+class IrDumpCompilerIrExtension(
     private val outputDirAbsolutePath: String,
 ) : IrGenerationExtension {
 

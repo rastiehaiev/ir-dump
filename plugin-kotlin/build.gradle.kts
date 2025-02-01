@@ -10,7 +10,7 @@ dependencies {
 publishing {
     publications {
         create<MavenPublication>("unshaded") {
-            artifactId = project.name
+            artifactId = "ir-dump-compiler-plugin"
             from(components["java"])
         }
     }

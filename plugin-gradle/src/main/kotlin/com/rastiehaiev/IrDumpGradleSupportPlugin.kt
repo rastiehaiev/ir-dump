@@ -44,7 +44,7 @@ class IrDumpGradleSupportPlugin : KotlinCompilerPluginSupportPlugin {
     override fun getPluginArtifact(): SubpluginArtifact {
         return SubpluginArtifact(
             groupId = "com.rastiehaiev",
-            artifactId = "plugin-kotlin",
+            artifactId = "ir-dump-compiler-plugin",
             version = "0.0.1",
         )
     }
