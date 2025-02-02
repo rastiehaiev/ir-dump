@@ -1,41 +1,40 @@
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+
 plugins {
     id("buildlogic.kotlin-common-conventions")
     id("maven-publish")
     id("java-gradle-plugin")
+    id("signing")
+    alias(libs.plugins.gradle.plugin.publish)
+    alias(libs.plugins.gradle.plugin.shadow.jar)
 }
 
 dependencies {
     implementation(kotlin("gradle-plugin-api"))
     compileOnly(libs.kotlin.gradle.plugin)
+    testImplementation(libs.kotlin.gradle.plugin)
 }
 
 gradlePlugin {
-    val greeting by plugins.creating {
-        id = "com.rastiehaiev.ir-dump"
-        implementationClass = "com.rastiehaiev.IrDumpGradlePlugin"
+    website = "https://github.com/rastiehaiev/ir-dump"
+    vcsUrl = "https://github.com/rastiehaiev/ir-dump.git"
+    plugins {
+        create("irDump") {
+            id = "com.rastiehaiev.ir-dump"
+            displayName = "IR Dump Kotlin compiler plugin"
+            implementationClass = "com.rastiehaiev.IrDumpGradlePlugin"
+            description = "A Gradle plugin for generating IR dump files"
+            tags.set(listOf("compiler", "kotlin"))
+        }
     }
-}
-
-val functionalTestSourceSet: SourceSet = sourceSets.create("functionalTest") {
-}
-
-configurations["functionalTestImplementation"].extendsFrom(configurations["testImplementation"])
-configurations["functionalTestRuntimeOnly"].extendsFrom(configurations["testRuntimeOnly"])
-
-val functionalTest by tasks.registering(Test::class) {
-    testClassesDirs = functionalTestSourceSet.output.classesDirs
-    classpath = functionalTestSourceSet.runtimeClasspath
-    useJUnitPlatform()
-}
-
-gradlePlugin.testSourceSets.add(functionalTestSourceSet)
-
-tasks.named<Task>("check") {
-    dependsOn(functionalTest)
 }
 
 publishing {
     repositories {
         mavenLocal()
     }
+}
+
+tasks.named<ShadowJar>("shadowJar") {
+    archiveClassifier.set("")
 }

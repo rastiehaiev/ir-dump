@@ -1,8 +1,12 @@
 [versions]
 kotlin = "2.0.21"
+gradle-plugin-publish = "1.3.0"
+gradleup-shadow-jar = "9.0.0-beta4"
 
 [plugins]
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+gradle-plugin-publish = { id = "com.gradle.plugin-publish", version.ref = "gradle-plugin-publish" }
+gradle-plugin-shadow-jar = { id = "com.gradleup.shadow", version.ref = "gradleup-shadow-jar" }
 
 [libraries]
 kotlin-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
