@@ -1,4 +1,4 @@
-package com.rastiehaiev
+package io.github.rastiehaiev
 
 import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.OutputDirectory

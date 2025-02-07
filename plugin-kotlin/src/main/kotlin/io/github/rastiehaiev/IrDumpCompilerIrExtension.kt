@@ -1,4 +1,4 @@
-package com.rastiehaiev
+package io.github.rastiehaiev
 
 import org.jetbrains.kotlin.backend.common.extensions.IrGenerationExtension
 import org.jetbrains.kotlin.backend.common.extensions.IrPluginContext
@@ -33,7 +33,7 @@ private class IrDumper(
         super.visitDeclaration(declaration)
 
         // Check if the function is annotated with the desired annotation
-        val hasTargetAnnotation = declaration.annotations.any { it.type.render() == "com.rastiehaiev.IrDump" }
+        val hasTargetAnnotation = declaration.annotations.any { it.type.render() == "io.github.rastiehaiev.IrDump" }
         if (hasTargetAnnotation) {
             if (declaration is IrDeclarationParent) {
                 log(declaration.kotlinFqName.asString(), declaration.dump())

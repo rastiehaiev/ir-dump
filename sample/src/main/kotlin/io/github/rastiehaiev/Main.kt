@@ -1,4 +1,4 @@
-package com.rastiehaiev
+package io.github.rastiehaiev
 
 fun main() {
     println("Hello World!")

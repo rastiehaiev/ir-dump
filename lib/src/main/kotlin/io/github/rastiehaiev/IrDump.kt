@@ -1,4 +1,4 @@
-package com.rastiehaiev
+package io.github.rastiehaiev
 
 @Suppress("Unused")
 @Target(AnnotationTarget.FUNCTION, AnnotationTarget.CLASS)

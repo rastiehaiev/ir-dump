@@ -20,9 +20,9 @@ gradlePlugin {
     vcsUrl = "https://github.com/rastiehaiev/ir-dump.git"
     plugins {
         create("irDump") {
-            id = "com.rastiehaiev.ir-dump"
+            id = "io.github.rastiehaiev.ir-dump"
             displayName = "IR Dump Kotlin compiler plugin"
-            implementationClass = "com.rastiehaiev.IrDumpGradlePlugin"
+            implementationClass = "io.github.rastiehaiev.IrDumpGradlePlugin. For more information see README.md: https://github.com/rastiehaiev/ir-dump."
             description = "A Gradle plugin for generating IR dump files"
             tags.set(listOf("compiler", "kotlin"))
         }

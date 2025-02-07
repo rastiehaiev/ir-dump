@@ -1,4 +1,4 @@
-package com.rastiehaiev
+package io.github.rastiehaiev
 
 import org.jetbrains.kotlin.compiler.plugin.AbstractCliOption
 import org.jetbrains.kotlin.compiler.plugin.CliOption
@@ -8,7 +8,7 @@ import org.jetbrains.kotlin.config.CompilerConfiguration
 
 @OptIn(ExperimentalCompilerApi::class)
 class IrDumpCommandLineProcessor : CommandLineProcessor {
-    override val pluginId = "com.rastiehaiev.ir-dump"
+    override val pluginId = "io.github.rastiehaiev.ir-dump"
 
     override val pluginOptions = listOf(
         CliOption(

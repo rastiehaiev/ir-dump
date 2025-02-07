@@ -1,6 +1,6 @@
 plugins {
     id("org.jetbrains.kotlin.jvm") version "2.0.21"
-    id("com.rastiehaiev.ir-dump") version "0.0.1"
+    id("io.github.rastiehaiev.ir-dump")
 }
 
 repositories {
@@ -8,8 +8,10 @@ repositories {
     gradlePluginPortal()
 }
 
+val irDumpPluginVersion = gradle.extra["irDumpPluginVersion"] as String
+
 dependencies {
-    implementation("com.rastiehaiev:ir-dump-annotations:0.0.1")
+    implementation("io.github.rastiehaiev:ir-dump-annotations:$irDumpPluginVersion")
 }
 
 irDump {

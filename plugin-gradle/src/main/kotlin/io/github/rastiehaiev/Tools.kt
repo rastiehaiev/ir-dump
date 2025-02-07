@@ -1,4 +1,4 @@
-package com.rastiehaiev
+package io.github.rastiehaiev
 
 import org.gradle.api.Project
 import org.gradle.api.file.Directory

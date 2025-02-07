@@ -1,4 +1,4 @@
-package com.rastiehaiev
+package io.github.rastiehaiev
 
 import org.gradle.api.Project
 import org.gradle.api.provider.Provider
@@ -39,13 +39,13 @@ class IrDumpGradleSupportPlugin : KotlinCompilerPluginSupportPlugin {
         plugins.hasPlugin(IrDumpGradleSupportPlugin::class.java) && getIrExtension().enabled
     }
 
-    override fun getCompilerPluginId(): String = "com.rastiehaiev.ir-dump"
+    override fun getCompilerPluginId(): String = with(PluginConfiguration) { "$GROUP_ID.$ARTIFACT_ID_GRADLE" }
 
-    override fun getPluginArtifact(): SubpluginArtifact {
-        return SubpluginArtifact(
-            groupId = "com.rastiehaiev",
-            artifactId = "ir-dump-compiler-plugin",
-            version = "0.0.1",
+    override fun getPluginArtifact() = with(PluginConfiguration) {
+        SubpluginArtifact(
+            groupId = GROUP_ID,
+            artifactId = ARTIFACT_ID_KOTLIN,
+            version = VERSION,
         )
     }
 }
