@@ -9,9 +9,11 @@ repositories {
 }
 
 val irDumpPluginVersion = gradle.extra["irDumpPluginVersion"] as String
+val irDumpPluginGroupId = gradle.extra["irDumpPluginGroupId"] as String
+val irDumpPluginLibsArtifactId = gradle.extra["irDumpPluginLibsArtifactId"] as String
 
 dependencies {
-    implementation("io.github.rastiehaiev:ir-dump-annotations:$irDumpPluginVersion")
+    implementation("$irDumpPluginGroupId:$irDumpPluginLibsArtifactId:$irDumpPluginVersion")
 }
 
 irDump {

@@ -1,16 +1,14 @@
 import io.github.rastiehaiev.PluginConfigurationGenerator
+import io.github.rastiehaiev.getPluginDetails
 
 plugins {
     id("org.jetbrains.kotlin.jvm")
 }
 
-private fun resolveProperty(name: String): String = project.findProperty(name)?.toString()
-    ?: error("Please define property '$name'.")
+private val pluginDetails = project.getPluginDetails()
 
-private val pluginGroupId = resolveProperty("ir.dump.plugin.group.id")
-private val pluginVersionNumber = resolveProperty("ir.dump.plugin.version")
-private val pluginGradleArtifactId = resolveProperty("ir.dump.plugin.gradle.artifact.id")
-private val pluginKotlinArtifactId = resolveProperty("ir.dump.plugin.kotlin.artifact.id")
+private val pluginGroupId = pluginDetails.groupId
+private val pluginVersionNumber = pluginDetails.version
 
 group = pluginGroupId
 version = pluginVersionNumber
@@ -37,8 +35,8 @@ val pluginConfigurationGeneratorTask = tasks.register<PluginConfigurationGenerat
     "generateBuildConfig",
     pluginGroupId,
     pluginVersionNumber,
-    pluginGradleArtifactId,
-    pluginKotlinArtifactId,
+    pluginDetails.gradleArtifactId,
+    pluginDetails.kotlinArtifactId,
     sourcesDir,
 )
 

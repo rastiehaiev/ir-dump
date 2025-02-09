@@ -8,4 +8,6 @@ repositories {
 
 dependencies {
     implementation(libs.kotlin.gradle.plugin)
+    implementation(libs.gradle.plugin.publish)
+    implementation(libs.gradleup.shadow.jar)
 }

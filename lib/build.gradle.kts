@@ -1,3 +1,5 @@
+import io.github.rastiehaiev.getPluginDetails
+
 plugins {
     id("buildlogic.kotlin-common-conventions")
     id("maven-publish")
@@ -6,7 +8,7 @@ plugins {
 publishing {
     publications {
         create<MavenPublication>("unshaded") {
-            artifactId = "ir-dump-annotations"
+            artifactId = project.getPluginDetails().libsArtifactId
             from(components["java"])
         }
     }

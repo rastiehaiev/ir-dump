@@ -9,12 +9,14 @@ private fun resolveProperty(name: String): String = properties.getProperty(name)
 
 val pluginGroupId = resolveProperty("ir.dump.plugin.group.id")
 val pluginArtifactId = resolveProperty("ir.dump.plugin.gradle.artifact.id")
+val pluginLibsArtifactId = resolveProperty("ir.dump.plugin.libs.artifact.id")
 val pluginVersion = resolveProperty("ir.dump.plugin.version")
 
-val pluginId = "$pluginGroupId.$pluginArtifactId"
-
-gradle.extra.set("irDumpPluginId", pluginId)
+gradle.extra.set("irDumpPluginId", "$pluginGroupId.$pluginArtifactId")
 gradle.extra.set("irDumpPluginVersion", pluginVersion)
+
+gradle.extra.set("irDumpPluginGroupId", pluginGroupId)
+gradle.extra.set("irDumpPluginLibsArtifactId", pluginLibsArtifactId)
 
 pluginManagement {
     repositories {
