@@ -1,14 +1,16 @@
 import io.github.rastiehaiev.PluginConfigurationGenerator
-import io.github.rastiehaiev.getPluginDetails
+import io.github.rastiehaiev.getDeployConfiguration
 
 plugins {
     id("org.jetbrains.kotlin.jvm")
+    id("maven-publish")
+    id("signing")
 }
 
-private val pluginDetails = project.getPluginDetails()
+private val deployConfiguration = project.getDeployConfiguration()
 
-private val pluginGroupId = pluginDetails.groupId
-private val pluginVersionNumber = pluginDetails.version
+private val pluginGroupId = deployConfiguration.groupId
+private val pluginVersionNumber = deployConfiguration.version
 
 group = pluginGroupId
 version = pluginVersionNumber
@@ -30,13 +32,14 @@ tasks.test {
     useJUnitPlatform()
 }
 
-val sourcesDir = File(project.layout.buildDirectory.asFile.get(), "generated-sources/src/main/kotlin/io/github/rastiehaiev")
+val sourcesDir =
+    File(project.layout.buildDirectory.asFile.get(), "generated-sources/src/main/kotlin/io/github/rastiehaiev")
 val pluginConfigurationGeneratorTask = tasks.register<PluginConfigurationGenerator>(
     "generateBuildConfig",
     pluginGroupId,
     pluginVersionNumber,
-    pluginDetails.gradleArtifactId,
-    pluginDetails.kotlinArtifactId,
+    deployConfiguration.gradleArtifactId,
+    deployConfiguration.kotlinArtifactId,
     sourcesDir,
 )
 
@@ -49,6 +52,31 @@ kotlin {
     sourceSets {
         main {
             kotlin.srcDir(pluginConfigurationGeneratorTask.map { it.sourcesDir })
+        }
+    }
+}
+
+tasks.register("publishPluginsAndLibs") {
+    group = "ir-dump"
+
+    val publishTasks = listOf(
+        "publishPlugins",
+        "publishToSonatype",
+        /*"publishToMavenLocal",*/
+    ).mapNotNull { project.tasks.findByName(it) }
+
+    if (publishTasks.isNotEmpty()) {
+        setDependsOn(publishTasks)
+        println("[${project.name}] Publishing task(s): ${publishTasks.map { it.name }}")
+    } else {
+        println("No publish tasks found in project '${project.name}'.")
+    }
+}
+
+tasks.register("listPublications") {
+    doLast {
+        publishing.publications.forEach {
+            println("Publication: ${it.name}")
         }
     }
 }

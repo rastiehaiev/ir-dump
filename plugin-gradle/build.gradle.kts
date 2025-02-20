@@ -1,8 +1,8 @@
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
-import io.github.rastiehaiev.getPluginDetails
+import io.github.rastiehaiev.getDeployConfiguration
 
 plugins {
-    id("buildlogic.kotlin-plugin-conventions")
+    id("buildlogic.kotlin-common-conventions")
     id("java-gradle-plugin")
     id("com.gradle.plugin-publish")
     id("com.gradleup.shadow")
@@ -14,14 +14,14 @@ dependencies {
     testImplementation(libs.kotlin.gradle.plugin)
 }
 
-private val pluginDetails = project.getPluginDetails()
+private val deployConfiguration = project.getDeployConfiguration()
 
 gradlePlugin {
     website = "https://github.com/rastiehaiev/ir-dump"
     vcsUrl = "https://github.com/rastiehaiev/ir-dump.git"
     plugins {
         create("irDump") {
-            id = "${pluginDetails.groupId}.${pluginDetails.gradleArtifactId}"
+            id = "${deployConfiguration.groupId}.${deployConfiguration.gradleArtifactId}"
             displayName = "IR Dump Gradle compiler plugin"
             implementationClass = "io.github.rastiehaiev.IrDumpGradlePlugin"
             description = "A Gradle plugin for generating IR dump files. For more information see README.md: https://github.com/rastiehaiev/ir-dump."
@@ -33,7 +33,7 @@ gradlePlugin {
 publishing {
     publications {
         withType<MavenPublication>().configureEach {
-            artifactId = pluginDetails.gradleArtifactId
+            artifactId = deployConfiguration.gradleArtifactId
         }
     }
     repositories {

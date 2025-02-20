@@ -1,18 +1,13 @@
-import io.github.rastiehaiev.getPluginDetails
+import io.github.rastiehaiev.getDeployConfiguration
 
 plugins {
     id("buildlogic.kotlin-common-conventions")
-    id("maven-publish")
 }
 
-publishing {
-    publications {
-        create<MavenPublication>("unshaded") {
-            artifactId = project.getPluginDetails().libsArtifactId
-            from(components["java"])
-        }
-    }
-    repositories {
-        mavenLocal()
-    }
-}
+val libsArtifactId = project.getDeployConfiguration().libsArtifactId
+
+ext["ir.dump.artifact.id"] = libsArtifactId
+ext["ir.dump.artifact.description"] = "A Kotlin lib for generating IR dump files. " +
+        "For more information see README.md: https://github.com/rastiehaiev/ir-dump."
+
+apply(plugin = "buildlogic.kotlin-maven-artifact-conventions")

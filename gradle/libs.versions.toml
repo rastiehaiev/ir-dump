@@ -2,6 +2,7 @@
 kotlin = "2.0.21"
 gradle-plugin-publish = "1.3.0"
 gradleup-shadow = "9.0.0-beta8"
+maven-central-publish = "1.0.6"
 
 [plugins]
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
@@ -13,3 +14,5 @@ kotlin-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", v
 kotlin-compiler-embeddable = { module = "org.jetbrains.kotlin:kotlin-compiler-embeddable" }
 gradle-plugin-publish = { module = "com.gradle.plugin-publish:com.gradle.plugin-publish.gradle.plugin", version.ref = "gradle-plugin-publish" }
 gradleup-shadow-jar = { module = "com.gradleup.shadow:com.gradleup.shadow.gradle.plugin", version.ref = "gradleup-shadow" }
+
+maven-central-publish = { module = "eu.kakde.gradle.sonatype-maven-central-publisher:eu.kakde.gradle.sonatype-maven-central-publisher.gradle.plugin", version.ref = "maven-central-publish" }
