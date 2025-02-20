@@ -4,8 +4,9 @@ plugins {
 }
 
 repositories {
-    mavenLocal()
     gradlePluginPortal()
+    mavenCentral()
+    mavenLocal()
 }
 
 val irDumpPluginVersion = gradle.extra["irDumpPluginVersion"] as String

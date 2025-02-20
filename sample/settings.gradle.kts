@@ -21,6 +21,7 @@ gradle.extra.set("irDumpPluginLibsArtifactId", pluginLibsArtifactId)
 pluginManagement {
     repositories {
         gradlePluginPortal()
+        mavenCentral()
         mavenLocal()
     }
     resolutionStrategy {
