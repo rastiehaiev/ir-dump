@@ -5,6 +5,7 @@ plugins {
     id("buildlogic.kotlin-common-conventions")
     id("java-gradle-plugin")
     id("com.gradle.plugin-publish")
+    id("maven-publish")
     id("com.gradleup.shadow")
 }
 

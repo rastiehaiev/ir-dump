@@ -1,9 +1,10 @@
 import io.github.rastiehaiev.getDeployConfiguration
 import org.gradle.api.plugins.catalog.internal.TomlFileGenerator
+import net.thebugmc.gradle.sonatypepublisher.PublishingType
 
 plugins {
     id("buildlogic.kotlin-common-conventions")
-    id("eu.kakde.gradle.sonatype-maven-central-publisher")
+    id("net.thebugmc.gradle.sonatype-central-portal-publisher")
 }
 
 private val deployConfiguration = project.getDeployConfiguration()
@@ -11,18 +12,15 @@ private val deployConfiguration = project.getDeployConfiguration()
 val centralPortalUsername = findProperty("centralPortalUsername") as String?
 val centralPortalPassword = findProperty("centralPortalPassword") as String?
 
-sonatypeCentralPublishExtension {
-    val artifactIdString = project.findProperty("ir.dump.artifact.id") as String?
-    val descriptionString = project.findProperty("ir.dump.artifact.description") as String?
+val artifactIdString = project.findProperty("ir.dump.artifact.id") as String?
+val descriptionString = project.findProperty("ir.dump.artifact.description") as String?
 
-    groupId.set(project.group.toString())
-    artifactId.set(artifactIdString)
-    version.set(deployConfiguration.version)
-    componentType.set("java")
-    publishingType.set("AUTOMATIC")
+centralPortal {
+    username = centralPortalUsername
+    password = centralPortalPassword
 
-    username.set(centralPortalUsername)
-    password.set(centralPortalPassword)
+    name = artifactIdString
+    publishingType = PublishingType.AUTOMATIC
 
     pom {
         name.set(artifactIdString)
@@ -51,9 +49,4 @@ sonatypeCentralPublishExtension {
             url.set("https://github.com/rastiehaiev/ir-dump/issues")
         }
     }
-}
-
-
-tasks.withType<TomlFileGenerator> {
-    outputFile = layout.buildDirectory.dir("tmp").get().file("libs.versions.toml")
 }

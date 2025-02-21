@@ -3,7 +3,6 @@ import io.github.rastiehaiev.getDeployConfiguration
 
 plugins {
     id("org.jetbrains.kotlin.jvm")
-    id("maven-publish")
     id("signing")
 }
 
@@ -60,9 +59,9 @@ tasks.register("publishPluginsAndLibs") {
     group = "ir-dump"
 
     val publishTasks = listOf(
+        "publishToMavenLocal",
+        "publishToCentralPortal",
         "publishPlugins",
-        "publishToSonatype",
-        /*"publishToMavenLocal",*/
     ).mapNotNull { project.tasks.findByName(it) }
 
     if (publishTasks.isNotEmpty()) {
@@ -70,13 +69,5 @@ tasks.register("publishPluginsAndLibs") {
         println("[${project.name}] Publishing task(s): ${publishTasks.map { it.name }}")
     } else {
         println("No publish tasks found in project '${project.name}'.")
-    }
-}
-
-tasks.register("listPublications") {
-    doLast {
-        publishing.publications.forEach {
-            println("Publication: ${it.name}")
-        }
     }
 }
